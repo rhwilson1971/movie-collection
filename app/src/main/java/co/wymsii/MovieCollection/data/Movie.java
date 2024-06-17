@@ -1,11 +1,16 @@
 package co.wymsii.MovieCollection.data;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 
+@Entity
 public class Movie {
     private String title;
     private Date premiered;
     private Date added;
+    @PrimaryKey
     private Long id;
     private String genre;
     private String description;
