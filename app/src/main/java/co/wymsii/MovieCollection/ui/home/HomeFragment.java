@@ -34,7 +34,10 @@ public class HomeFragment extends Fragment {
 //        final TextView textView = binding.textHome;
 //        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        moviesAdapter = new MoviesAdapter(movies, (movie) -> { Log.d("debug", movie.toString()); });
+        moviesAdapter = new MoviesAdapter(movies, (movie) -> {
+            Log.d("debug", movie.toString());
+
+        });
         binding.movieListView.setAdapter(moviesAdapter);
 
         homeViewModel.getMovies().observe(getViewLifecycleOwner(), movies -> {
@@ -42,8 +45,6 @@ public class HomeFragment extends Fragment {
             this.movies.addAll(movies);
             moviesAdapter.notifyDataSetChanged();
         });
-
-
         return root;
     }
 
