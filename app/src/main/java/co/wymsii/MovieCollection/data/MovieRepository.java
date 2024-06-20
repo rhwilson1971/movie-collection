@@ -1,17 +1,17 @@
 package co.wymsii.MovieCollection.data;
 
 import android.content.Context;
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Room;
-
 import java.util.List;
+import javax.inject.Inject;
+import dagger.hilt.android.qualifiers.ApplicationContext;
 
 public class MovieRepository {
-
     private final AppDatabase db;
 
-    public MovieRepository(Context ctx) {
+    @Inject
+    public MovieRepository(@ApplicationContext Context ctx) {
 
         String databaseName = "movies";
 
@@ -25,5 +25,9 @@ public class MovieRepository {
 
     public LiveData<List<Movie>> getMovies(){
         return db.movieDao().getAll();
+    }
+
+    public LiveData<Movie> getMovie(Long id){
+        return db.movieDao().getMovie(id);
     }
 }

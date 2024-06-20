@@ -38,9 +38,7 @@ public class MovieDetailsFragment extends Fragment {
         final EditText title = binding.editTextTitle;
         final EditText description = binding.editTextDescription;
 
-
         mViewModel = new ViewModelProvider(this).get(MovieDetailsViewModel.class);
-
         mViewModel.getMovieTitle().observe(getViewLifecycleOwner(), title::setText);
         mViewModel.getMovieDescription().observe(getViewLifecycleOwner(), description::setText);
 
