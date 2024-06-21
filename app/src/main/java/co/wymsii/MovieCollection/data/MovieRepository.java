@@ -12,7 +12,6 @@ public class MovieRepository {
 
     @Inject
     public MovieRepository(@ApplicationContext Context ctx) {
-
         String databaseName = "movies";
 
         db = Room.databaseBuilder(ctx,
