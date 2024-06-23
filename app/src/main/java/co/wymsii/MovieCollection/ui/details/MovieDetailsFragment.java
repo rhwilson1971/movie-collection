@@ -11,12 +11,18 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
+import java.util.function.ObjIntConsumer;
 
 import co.wymsii.MovieCollection.R;
+import co.wymsii.MovieCollection.databinding.FragmentMovieDetailsBinding;
 
 public class MovieDetailsFragment extends Fragment {
 
     private MovieDetailsViewModel mViewModel;
+
+    FragmentMovieDetailsBinding binding;
 
     public static MovieDetailsFragment newInstance() {
         return new MovieDetailsFragment();
@@ -25,14 +31,23 @@ public class MovieDetailsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_movie_details, container, false);
+
+        binding = FragmentMovieDetailsBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+
+        final EditText title = binding.editTextTitle;
+        final EditText description = binding.editTextDescription;
+
+        mViewModel = new ViewModelProvider(this).get(MovieDetailsViewModel.class);
+        mViewModel.getMovieTitle().observe(getViewLifecycleOwner(), title::setText);
+        mViewModel.getMovieDescription().observe(getViewLifecycleOwner(), description::setText);
+
+        return root;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MovieDetailsViewModel.class);
-        // TODO: Use the ViewModel
-    }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+    }
 }

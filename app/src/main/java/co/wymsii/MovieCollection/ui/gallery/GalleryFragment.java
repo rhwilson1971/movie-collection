@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.myapplication.databinding.FragmentGalleryBinding;
+import co.wymsii.MovieCollection.databinding.FragmentGalleryBinding;
 
 public class GalleryFragment extends Fragment {
 

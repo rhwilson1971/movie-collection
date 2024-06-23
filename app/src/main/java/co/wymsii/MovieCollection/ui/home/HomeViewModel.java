@@ -1,19 +1,29 @@
 package co.wymsii.MovieCollection.ui.home;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
+import java.util.List;
+import javax.inject.Inject;
+
+import co.wymsii.MovieCollection.data.Movie;
+import co.wymsii.MovieCollection.data.MovieRepository;
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
+@HiltViewModel
 public class HomeViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final MovieRepository repo;
+    private final SavedStateHandle savedStateHandle;
 
-    public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+    @Inject
+    public HomeViewModel(MovieRepository repo, SavedStateHandle savedStateHandle) {
+        this.repo = repo;
+        this.savedStateHandle = savedStateHandle;
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<Movie>> getMovies() {
+        return repo.getMovies();
     }
 }
