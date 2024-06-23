@@ -14,7 +14,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class HomeViewModel extends ViewModel {
 
-
     private final MovieRepository repo;
     private final SavedStateHandle savedStateHandle;
 
@@ -24,9 +23,7 @@ public class HomeViewModel extends ViewModel {
         this.savedStateHandle = savedStateHandle;
     }
 
-
     public LiveData<List<Movie>> getMovies() {
-        return
-                repo.getMovies();
+        return repo.getMovies();
     }
 }

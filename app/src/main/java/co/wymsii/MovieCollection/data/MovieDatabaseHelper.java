@@ -25,8 +25,9 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
         private static final String COL_DESC = "description";
         private static final String COL_PREMIERED = "date_premiered";
         private static final String COL_ADDED = "date_added";
-        private static final String COL_MEDIA_TYPE = "date_purchased";
-        private static final String COL_GENRE = "date_purchased";
+        private static final String COL_MEDIA_TYPE = "med_type";
+        private static final String COL_GENRE = "genre";
+        private static final String COL_IMAGE_URL = "image_url";
     }
 
     @Override
@@ -85,7 +86,7 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
         values.put(MoviesTable.COL_PREMIERED, premiered);
 
         values.put(MoviesTable.COL_MEDIA_TYPE, movie.getMediaType());
-        String whereClause = "id = ? ";
+        values.put(MoviesTable.COL_IMAGE_URL, movie.getImageURL());
 
         int rowsUpdated =
                 db.update(MoviesTable.TABLE, values, "id = ?", new String[]{Long.toString(movie.getId())});
@@ -114,8 +115,9 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
                 Long added = cursor.getLong(4);
                 String mediaType = cursor.getString(5);
                 String genre = cursor.getString(6);
+                String imageURL = cursor.getString(7);
 
-                Movie movie = new Movie(id, title, desc, premiered, added, mediaType, genre);
+                Movie movie = new Movie(id, title, desc, premiered, added, mediaType, genre, imageURL);
 
                 movieList.add(movie);
             } while (cursor.moveToNext());

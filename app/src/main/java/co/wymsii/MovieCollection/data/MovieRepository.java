@@ -2,10 +2,12 @@ package co.wymsii.MovieCollection.data;
 
 import android.content.Context;
 import androidx.lifecycle.LiveData;
+import androidx.room.ProvidedTypeConverter;
 import androidx.room.Room;
 import java.util.List;
 import javax.inject.Inject;
 import dagger.hilt.android.qualifiers.ApplicationContext;
+
 
 public class MovieRepository {
     private final AppDatabase db;
@@ -15,7 +17,10 @@ public class MovieRepository {
         String databaseName = "movies";
 
         db = Room.databaseBuilder(ctx,
-                AppDatabase.class, databaseName).build();
+                AppDatabase.class, databaseName)
+                .build();
+
+
     }
 
     public void add(Movie movie) {
