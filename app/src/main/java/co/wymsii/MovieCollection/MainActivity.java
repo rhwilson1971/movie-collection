@@ -31,9 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show());
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -45,6 +43,14 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        binding.appBarMain.fab.setOnClickListener(view -> {
+//            Snackbar.make(view, "Adding a new Movie", Snackbar.LENGTH_LONG)
+//                    .setAction("Action", null)
+//                    .setAnchorView(R.id.fab).show();
+            navController.navigate(R.id.action_nav_home_to_movieDetailsFragment);
+
+        });
     }
 
     @Override

@@ -17,25 +17,34 @@ public class MovieDetailsViewModel extends ViewModel {
     MutableLiveData<String> movieTitle = new MutableLiveData<>();
     MutableLiveData<String> movieDescription = new MutableLiveData<>();
 
-    public MovieRepository moviesRepository;
-    public SavedStateHandle savedStateHandle;
+    public final MovieRepository moviesRepository;
+    public final SavedStateHandle savedStateHandle;
 
     @Inject
     MovieDetailsViewModel(
-            SavedStateHandle savedStateHandle,
-            MovieRepository moviesRepository) {
+            MovieRepository moviesRepository,
+            SavedStateHandle savedStateHandle
+            ) {
 
         this.moviesRepository = moviesRepository;
         this.savedStateHandle = savedStateHandle;
 
         String movieId = savedStateHandle.get("movieId");
-        Long id = Long.parseLong(movieId);
-        LiveData<Movie> movie = moviesRepository.getMovie(id);
+        long id = Long.parseLong(movieId);
 
-        movie.observeForever(m -> {
-            movieTitle.setValue(m.getTitle());
-            movieDescription.setValue(m.getDescription());
-        });
+        if(id != 0L) {
+            LiveData<Movie> movie = moviesRepository.getMovie(id);
+
+            movie.observeForever(m -> {
+                movieTitle.setValue(m.getTitle());
+                movieDescription.setValue(m.getDescription());
+            });
+        }
+        else {
+            movieTitle.setValue("");
+            movieDescription.setValue("");
+        }
+
     }
 
     public MutableLiveData<String> getMovieTitle() {

@@ -12,10 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-
-import java.util.function.ObjIntConsumer;
-
-import co.wymsii.MovieCollection.R;
 import co.wymsii.MovieCollection.databinding.FragmentMovieDetailsBinding;
 
 public class MovieDetailsFragment extends Fragment {
@@ -33,7 +29,12 @@ public class MovieDetailsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         binding = FragmentMovieDetailsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         final EditText title = binding.editTextTitle;
         final EditText description = binding.editTextDescription;
@@ -41,13 +42,5 @@ public class MovieDetailsFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(MovieDetailsViewModel.class);
         mViewModel.getMovieTitle().observe(getViewLifecycleOwner(), title::setText);
         mViewModel.getMovieDescription().observe(getViewLifecycleOwner(), description::setText);
-
-        return root;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
     }
 }

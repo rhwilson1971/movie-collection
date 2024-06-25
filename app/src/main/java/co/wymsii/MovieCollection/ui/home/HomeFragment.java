@@ -10,12 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import co.wymsii.MovieCollection.R;
 import co.wymsii.MovieCollection.data.Movie;
 import co.wymsii.MovieCollection.databinding.FragmentHomeBinding;
 import dagger.hilt.EntryPoint;
@@ -47,25 +49,23 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //try {
-            homeViewModel =
-                    new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel =
+                new ViewModelProvider(this).get(HomeViewModel.class);
 
-            moviesAdapter = new MoviesAdapter(movies, (movie) -> {
-                Log.d("debug", movie.toString());
+        moviesAdapter = new MoviesAdapter(movies, (movie) -> {
+            Log.d("debug", movie.toString());
 
-            });
-            binding.movieListView.setAdapter(moviesAdapter);
+            Bundle args = new Bundle();
+            args.putLong("movieId", movie.getId());
 
-            homeViewModel.getMovies().observe(getViewLifecycleOwner(), movies -> {
-                this.movies.clear();
-                this.movies.addAll(movies);
-                moviesAdapter.notifyDataSetChanged();
-            });
+            Navigation.findNavController(view).navigate(R.id.action_nav_home_to_movieDetailsFragment, args);
+        });
+        binding.movieListView.setAdapter(moviesAdapter);
 
-//        }
-//        catch(Exception ex){
-//            Log.d("debug", ex.toString());
-//        }
+        homeViewModel.getMovies().observe(getViewLifecycleOwner(), movies -> {
+            this.movies.clear();
+            this.movies.addAll(movies);
+            moviesAdapter.notifyDataSetChanged();
+        });
     }
 }
