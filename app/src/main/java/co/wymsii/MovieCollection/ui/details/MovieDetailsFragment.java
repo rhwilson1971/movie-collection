@@ -47,6 +47,12 @@ public class MovieDetailsFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(MovieDetailsViewModel.class);
         mViewModel.getMovieTitle().observe(getViewLifecycleOwner(), title::setText);
         mViewModel.getMovieDescription().observe(getViewLifecycleOwner(), description::setText);
+        mViewModel.getMovieGenre().observe(getViewLifecycleOwner(), binding.movieGenre::setText);
+        mViewModel.getMediaType().observe(getViewLifecycleOwner(), binding.movieMedia::setText);
+
+        binding.movieGenre.setOnClickListener(v -> setMovieGenre());
+        binding.movieMedia.setOnClickListener(v -> setMediaType());
+
     }
 
     private void save() {
@@ -65,6 +71,22 @@ public class MovieDetailsFragment extends Fragment {
                 .setSingleChoiceItems(items, selectedItem, (dialog, which) -> {
                     String item = items[which];
                     mViewModel.getMovieGenre().postValue(item);
+                })
+                .setPositiveButton("OK", (dialog, which) -> {
+                    mViewModel.save();
+                }).setNegativeButton("Cancel", null);
+    }
+
+    private void setMediaType() {
+
+        String [] items = getResources().getStringArray(R.array.media_types);
+
+        int selectedItem = 0;
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Select Media")
+                .setSingleChoiceItems(items, selectedItem, (dialog, which) -> {
+                    String item = items[which];
+                    mViewModel.getMediaType().postValue(item);
                 })
                 .setPositiveButton("OK", (dialog, which) -> {
                     mViewModel.save();

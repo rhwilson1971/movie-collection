@@ -40,11 +40,11 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageGenre"
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_marginTop="44dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+        app:layout_constraintEnd_toStartOf="@+id/imageMedia"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider"
@@ -52,35 +52,35 @@
         app:srcCompat="@android:drawable/ic_menu_gallery" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageMedia"
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintStart_toEndOf="@+id/imageGenre"
         app:layout_constraintTop_toBottomOf="@+id/divider"
         android:contentDescription="@string/content_media"
         app:srcCompat="@android:drawable/ic_menu_manage" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/movieGenre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="108dp"
         android:layout_marginTop="28dp"
         android:text="@string/content_genre"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/imageGenre" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/movieMedia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="108dp"
         android:layout_marginTop="28dp"
         android:text="@string/content_media"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+        app:layout_constraintStart_toEndOf="@+id/movieGenre"
+        app:layout_constraintTop_toBottomOf="@+id/imageMedia" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

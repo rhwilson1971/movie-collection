@@ -68,6 +68,7 @@ public class MovieDetailsViewModel extends ViewModel {
     public MutableLiveData<String> getMovieGenre() {
         return movieGenre;
     }
+
     public MutableLiveData<String> getMediaType() {
         return mediaType;
     }
