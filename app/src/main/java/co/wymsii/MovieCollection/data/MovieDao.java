@@ -21,4 +21,7 @@ public interface MovieDao {
 
     @Query("SELECT * from movies where id = :id")
     LiveData<Movie> getMovie(Long id);
+
+    @Update
+    void update(Movie movie)
 }

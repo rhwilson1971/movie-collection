@@ -1,6 +1,5 @@
 package co.wymsii.MovieCollection.ui.details;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
@@ -16,6 +15,9 @@ public class MovieDetailsViewModel extends ViewModel {
 
     MutableLiveData<String> movieTitle = new MutableLiveData<>();
     MutableLiveData<String> movieDescription = new MutableLiveData<>();
+    MutableLiveData<Movie> movie;
+    MutableLiveData<String> movieGenre = new MutableLiveData<>();
+    MutableLiveData<String> mediaType = new MutableLiveData<>();
 
     public final MovieRepository moviesRepository;
     public final SavedStateHandle savedStateHandle;
@@ -29,22 +31,30 @@ public class MovieDetailsViewModel extends ViewModel {
         this.moviesRepository = moviesRepository;
         this.savedStateHandle = savedStateHandle;
 
-        String movieId = savedStateHandle.get("movieId");
-        long id = Long.parseLong(movieId);
+        long movieId = savedStateHandle.get("movieId");
 
-        if(id != 0L) {
-            LiveData<Movie> movie = moviesRepository.getMovie(id);
+        if(movieId != 0L) {
+            movie = (MutableLiveData<Movie>) moviesRepository.getMovie(movieId);
 
             movie.observeForever(m -> {
                 movieTitle.setValue(m.getTitle());
                 movieDescription.setValue(m.getDescription());
+                movieGenre.setValue(m.getGenre());
+                mediaType.setValue(m.getMediaType());
             });
         }
         else {
+            movie = new MutableLiveData<>();
             movieTitle.setValue("");
             movieDescription.setValue("");
+            movieGenre.setValue("");
+            mediaType.setValue("");
         }
+    }
 
+    public void save(){
+        movie.getValue().setTitle(movieTitle.getValue());
+        movie.getValue().setDescription(movieDescription.getValue());   ;
     }
 
     public MutableLiveData<String> getMovieTitle() {
@@ -52,5 +62,13 @@ public class MovieDetailsViewModel extends ViewModel {
     }
     public MutableLiveData<String> getMovieDescription() {
         return movieDescription;
+    }
+
+
+    public MutableLiveData<String> getMovieGenre() {
+        return movieGenre;
+    }
+    public MutableLiveData<String> getMediaType() {
+        return mediaType;
     }
 }

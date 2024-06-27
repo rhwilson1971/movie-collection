@@ -2,6 +2,7 @@ package co.wymsii.MovieCollection.ui.details;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,8 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import co.wymsii.MovieCollection.databinding.FragmentMovieDetailsBinding;
 
+import co.wymsii.MovieCollection.R;
+import co.wymsii.MovieCollection.databinding.FragmentMovieDetailsBinding;
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MovieDetailsFragment extends Fragment {
 
     private MovieDetailsViewModel mViewModel;
@@ -42,5 +47,27 @@ public class MovieDetailsFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(MovieDetailsViewModel.class);
         mViewModel.getMovieTitle().observe(getViewLifecycleOwner(), title::setText);
         mViewModel.getMovieDescription().observe(getViewLifecycleOwner(), description::setText);
+    }
+
+    private void save() {
+        String title = binding.editTextTitle.getText().toString();
+        String description = binding.editTextDescription.getText().toString();
+        mViewModel.save();
+    }
+
+    private void setMovieGenre() {
+
+        String [] items = getResources().getStringArray(R.array.movie_genres);
+
+        int selectedItem = 0;
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Select Genre")
+                .setSingleChoiceItems(items, selectedItem, (dialog, which) -> {
+                    String item = items[which];
+                    mViewModel.getMovieGenre().postValue(item);
+                })
+                .setPositiveButton("OK", (dialog, which) -> {
+                    mViewModel.save();
+                }).setNegativeButton("Cancel", null);
     }
 }
