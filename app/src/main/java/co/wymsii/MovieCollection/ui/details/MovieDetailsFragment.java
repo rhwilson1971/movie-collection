@@ -1,5 +1,7 @@
 package co.wymsii.MovieCollection.ui.details;
 
+import static androidx.navigation.NavGraphBuilderKt.navigation;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
@@ -8,11 +10,21 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import co.wymsii.MovieCollection.R;
 import co.wymsii.MovieCollection.databinding.FragmentMovieDetailsBinding;
@@ -50,46 +62,57 @@ public class MovieDetailsFragment extends Fragment {
         mViewModel.getMovieGenre().observe(getViewLifecycleOwner(), binding.movieGenre::setText);
         mViewModel.getMediaType().observe(getViewLifecycleOwner(), binding.movieMedia::setText);
 
-        binding.movieGenre.setOnClickListener(v -> setMovieGenre());
-        binding.movieMedia.setOnClickListener(v -> setMediaType());
+        binding.imageGenre.setOnClickListener(v -> setMovieGenre());
+        binding.imageMedia.setOnClickListener(v -> setMediaType());
 
-    }
+        binding.fab.setOnClickListener(v -> {
+            mViewModel.save();
+            // save to repo
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            Handler handler = new Handler(Looper.getMainLooper());
+            executorService.execute(() -> {
 
-    private void save() {
-        String title = binding.editTextTitle.getText().toString();
-        String description = binding.editTextDescription.getText().toString();
-        mViewModel.save();
+                mViewModel.updateRepo();
+
+                // finished task
+                handler.post(() ->
+                {
+                    Snackbar.make(v, "Movie Saved", Snackbar.LENGTH_SHORT).show();
+                    Navigation.findNavController(v).navigateUp();
+                });
+            });
+        });
     }
 
     private void setMovieGenre() {
 
         String [] items = getResources().getStringArray(R.array.movie_genres);
-
-        int selectedItem = 0;
+        final String[] selectedItem = new String[1];
+        int defaultItem = 0;
         new AlertDialog.Builder(getActivity())
                 .setTitle("Select Genre")
-                .setSingleChoiceItems(items, selectedItem, (dialog, which) -> {
-                    String item = items[which];
-                    mViewModel.getMovieGenre().postValue(item);
+                .setSingleChoiceItems(items, defaultItem, (dialog, which) -> {
+                    selectedItem[0] =items[which];
                 })
                 .setPositiveButton("OK", (dialog, which) -> {
-                    mViewModel.save();
-                }).setNegativeButton("Cancel", null);
+                    mViewModel.getMovieGenre().postValue(selectedItem[0]);
+                }).setNegativeButton("Cancel", null)
+                .show();
     }
 
     private void setMediaType() {
 
         String [] items = getResources().getStringArray(R.array.media_types);
-
-        int selectedItem = 0;
+        final String[] selectedItem = new String[1];
+        int defaultItem = 0;
         new AlertDialog.Builder(getActivity())
                 .setTitle("Select Media")
-                .setSingleChoiceItems(items, selectedItem, (dialog, which) -> {
-                    String item = items[which];
-                    mViewModel.getMediaType().postValue(item);
+                .setSingleChoiceItems(items, defaultItem, (dialog, which) -> {
+                    selectedItem[0] =items[which];
                 })
                 .setPositiveButton("OK", (dialog, which) -> {
-                    mViewModel.save();
-                }).setNegativeButton("Cancel", null);
+                    mViewModel.getMediaType().postValue(selectedItem[0]);
+                }).setNegativeButton("Cancel", null)
+                .show();
     }
 }

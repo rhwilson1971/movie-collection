@@ -3,20 +3,21 @@ package co.wymsii.MovieCollection.data;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity(tableName = "movies")
 public class Movie {
     private String title;
     private Date premiered;
     private Date added;
-    @PrimaryKey
-    private Long id;
+    @PrimaryKey(autoGenerate = true)
+    private long id;
     private String genre;
     private String description;
     private String mediaType;
     private String imageURL;
 
-    public Movie(Long id, String title, String description, Long premeireTimestamp, Long addedTimestamp, String genre, String mediaType, String imageURL){
+    public Movie(long id, String title, String description, Long premeireTimestamp, Long addedTimestamp, String genre, String mediaType, String imageURL){
         this.id= id;
         this.title=title;
         this.description = description;
@@ -30,7 +31,7 @@ public class Movie {
 
     public Movie(){
         title = "";
-        id = 0L;
+        //id = 0L;
         genre = "None";
         description = "";
         mediaType = "None";
@@ -63,11 +64,11 @@ public class Movie {
         this.added = added;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+     public void setId(Long id) {
         this.id = id;
     }
 
@@ -102,4 +103,5 @@ public class Movie {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
+
 }

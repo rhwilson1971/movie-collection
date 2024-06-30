@@ -34,4 +34,17 @@ public class MovieRepository {
     public LiveData<Movie> getMovie(Long id){
         return db.movieDao().getMovie(id);
     }
+
+    public void save(Movie value) {
+
+        db.movieDao().insert(value);
+    }
+
+    public void delete(Movie movie) {
+        db.movieDao().delete(movie);
+    }
+
+    public void update(Movie movie) {
+        db.movieDao().update(movie);
+    }
 }

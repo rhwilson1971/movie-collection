@@ -28,8 +28,18 @@
 
     <string-array name="media_types">
         <item>DVD</item>
-        <item>Blue-Ray</item>
+        <item>Blu-Ray</item>
+        <item>Vudu</item>
         <item>VHS</item>
-        <item>Streaming</item>
+        <item>Disney+</item>
+        <item>Netflix</item>
+        <item>MAX</item>
+        <item>Paramount+</item>
+        <item>Apple TV+</item>
+        <item>Hulu</item>
+        <item>Peacock</item>
+        <item>Tubi</item>
+        <item>Amazon Prime</item>
+        <item>BET+</item>
     </string-array>
 </resources>

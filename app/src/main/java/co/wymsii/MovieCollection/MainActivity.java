@@ -44,13 +44,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        binding.appBarMain.fab.setOnClickListener(view -> {
-//            Snackbar.make(view, "Adding a new Movie", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null)
-//                    .setAnchorView(R.id.fab).show();
-            navController.navigate(R.id.action_nav_home_to_movieDetailsFragment);
-
-        });
+//        binding.appBarMain.fab.setOnClickListener(view -> {
+////            Snackbar.make(view, "Adding a new Movie", Snackbar.LENGTH_LONG)
+////                    .setAction("Action", null)
+////                    .setAnchorView(R.id.fab).show();
+//            navController.navigate(R.id.action_nav_home_to_movieDetailsFragment);
+//
+//        });
     }
 
     @Override

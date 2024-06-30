@@ -1,8 +1,15 @@
 package co.wymsii.MovieCollection.ui.details;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
+
+import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 
@@ -52,9 +59,22 @@ public class MovieDetailsViewModel extends ViewModel {
         }
     }
 
-    public void save(){
+    public void save() {
+        if (movie.getValue() == null) {
+            movie.setValue(new Movie());
+        }
         movie.getValue().setTitle(movieTitle.getValue());
-        movie.getValue().setDescription(movieDescription.getValue());   ;
+        movie.getValue().setDescription(movieDescription.getValue());
+        movie.getValue().setGenre(movieGenre.getValue());
+        movie.getValue().setMediaType(mediaType.getValue());
+        movie.getValue().setAdded(new Date());
+    }
+
+    public void updateRepo(){
+        if(movie.getValue().getId() == 0)
+            moviesRepository.save(movie.getValue());
+        else
+            moviesRepository.update(movie.getValue());
     }
 
     public MutableLiveData<String> getMovieTitle() {
