@@ -88,6 +88,9 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")
 
+    implementation("com.google.android.material:material:1.12.0")
+
+
 
 }
 

@@ -25,4 +25,6 @@
     <string name="content_media">Media</string>
     <string name="add_movie_item_text">Add Movie</string>
     <string name="movie_name">Movie Name</string>
+    <string name="enter_search_term">Enter movie title or description</string>
+    <string name="find_a_movie_text">Find a movie</string>
 </resources>
