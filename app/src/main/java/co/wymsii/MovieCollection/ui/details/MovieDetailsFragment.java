@@ -14,6 +14,8 @@ import androidx.navigation.Navigation;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +68,12 @@ public class MovieDetailsFragment extends Fragment {
         binding.imageMedia.setOnClickListener(v -> setMediaType());
 
         binding.fab.setOnClickListener(v -> {
-            mViewModel.save();
+
+            mViewModel.getMovieTitle().postValue(title.getText().toString());
+            mViewModel.getMovieDescription().postValue(description.getText().toString());
+
+            mViewModel.save(title.getText().toString(),
+                    description.getText().toString());
             // save to repo
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             Handler handler = new Handler(Looper.getMainLooper());
@@ -81,6 +88,41 @@ public class MovieDetailsFragment extends Fragment {
                     Navigation.findNavController(v).navigateUp();
                 });
             });
+        });
+
+
+        binding.editTextTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                binding.fab.setEnabled(!s.toString().isEmpty());
+                Log.d("TAG", "afterTextChanged: " + s);
+            }
+        });
+        binding.editTextDescription.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.d("TAG", "afterTextChanged: " + s.toString());
+            }
         });
     }
 

@@ -70,6 +70,18 @@ public class MovieDetailsViewModel extends ViewModel {
         movie.getValue().setAdded(new Date());
     }
 
+    public void save(String title, String description) {
+        if (movie.getValue() == null) {
+            movie.setValue(new Movie());
+        }
+        movie.getValue().setTitle(title);
+        movie.getValue().setDescription(description);
+        movie.getValue().setGenre(movieGenre.getValue());
+        movie.getValue().setMediaType(mediaType.getValue());
+        if(movie.getValue().getId() == 0)
+            movie.getValue().setAdded(new Date());
+    }
+
     public void updateRepo(){
         if(movie.getValue().getId() == 0)
             moviesRepository.save(movie.getValue());
