@@ -13,7 +13,6 @@ import java.util.List;
 @Dao
 public interface MovieDao {
 
-
     @Query("SELECT * from movies order by added ASC")
     LiveData<List<Movie>> getAll();
 

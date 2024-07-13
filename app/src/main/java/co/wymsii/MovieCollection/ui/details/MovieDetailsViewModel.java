@@ -1,15 +1,14 @@
 package co.wymsii.MovieCollection.ui.details;
 
-import android.os.Handler;
-import android.os.Looper;
+
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
 import java.util.Date;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+
 
 import javax.inject.Inject;
 
@@ -22,9 +21,10 @@ public class MovieDetailsViewModel extends ViewModel {
 
     MutableLiveData<String> movieTitle = new MutableLiveData<>();
     MutableLiveData<String> movieDescription = new MutableLiveData<>();
-    MutableLiveData<Movie> movie;
+    MutableLiveData<Movie> movie = new MutableLiveData<>();
     MutableLiveData<String> movieGenre = new MutableLiveData<>();
     MutableLiveData<String> mediaType = new MutableLiveData<>();
+    MutableLiveData<String> showFormat = new MutableLiveData<>();
 
     public final MovieRepository moviesRepository;
     public final SavedStateHandle savedStateHandle;
@@ -41,21 +41,40 @@ public class MovieDetailsViewModel extends ViewModel {
         long movieId = savedStateHandle.get("movieId");
 
         if(movieId != 0L) {
-            movie = (MutableLiveData<Movie>) moviesRepository.getMovie(movieId);
+
+            moviesRepository.getMovie(movieId).observeForever(m -> {
+                        if(m != null){
+
+                            movie.postValue(m);
+                        }
+                    });
+
 
             movie.observeForever(m -> {
-                movieTitle.setValue(m.getTitle());
-                movieDescription.setValue(m.getDescription());
-                movieGenre.setValue(m.getGenre());
-                mediaType.setValue(m.getMediaType());
-            });
+
+                if(m != null)
+                    movieTitle.setValue(m.getTitle());
+                    movieDescription.setValue(m.getDescription());
+                    movieGenre.setValue(m.getGenre());
+                    mediaType.setValue(m.getMediaType());
+                    showFormat.setValue(m.getShowFormat());
+                    Log.d("TAG", "update: " + m.getTitle());
+                }
+            );
+//            movie.observeForever(m -> {
+//                movieTitle.setValue(m.getTitle());
+//                movieDescription.setValue(m.getDescription());
+//                movieGenre.setValue(m.getGenre());
+//                mediaType.setValue(m.getMediaType());
+//                showFormat.setValue(m.getShowFormat());
+//            });
         }
         else {
-            movie = new MutableLiveData<>();
             movieTitle.setValue("");
             movieDescription.setValue("");
             movieGenre.setValue("");
             mediaType.setValue("");
+            showFormat.setValue("");
         }
     }
 
@@ -78,6 +97,7 @@ public class MovieDetailsViewModel extends ViewModel {
         movie.getValue().setDescription(description);
         movie.getValue().setGenre(movieGenre.getValue());
         movie.getValue().setMediaType(mediaType.getValue());
+        movie.getValue().setShowFormat(showFormat.getValue());
         if(movie.getValue().getId() == 0)
             movie.getValue().setAdded(new Date());
     }
@@ -95,13 +115,13 @@ public class MovieDetailsViewModel extends ViewModel {
     public MutableLiveData<String> getMovieDescription() {
         return movieDescription;
     }
-
-
     public MutableLiveData<String> getMovieGenre() {
         return movieGenre;
     }
-
     public MutableLiveData<String> getMediaType() {
         return mediaType;
+    }
+    public MutableLiveData<String> getShowFormat() {
+        return showFormat;
     }
 }

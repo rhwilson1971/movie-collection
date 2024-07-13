@@ -61,19 +61,20 @@ public class MovieDetailsFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(MovieDetailsViewModel.class);
         mViewModel.getMovieTitle().observe(getViewLifecycleOwner(), title::setText);
         mViewModel.getMovieDescription().observe(getViewLifecycleOwner(), description::setText);
-        mViewModel.getMovieGenre().observe(getViewLifecycleOwner(), binding.movieGenre::setText);
-        mViewModel.getMediaType().observe(getViewLifecycleOwner(), binding.movieMedia::setText);
+        mViewModel.getMovieGenre().observe(getViewLifecycleOwner(), binding.textViewGenre::setText);
+        mViewModel.getMediaType().observe(getViewLifecycleOwner(), binding.textViewMediaType::setText);
+        mViewModel.getShowFormat().observe(getViewLifecycleOwner(), binding.textViewShowFormat::setText);
 
-        binding.imageGenre.setOnClickListener(v -> setMovieGenre());
-        binding.imageMedia.setOnClickListener(v -> setMediaType());
+        binding.buttonFormat.setOnClickListener(v -> setShowFormat());
+        binding.buttonGenre.setOnClickListener(v ->  setMovieGenre());
+        binding.buttonMediaType.setOnClickListener(v -> setMediaType());
 
         binding.fab.setOnClickListener(v -> {
 
             mViewModel.getMovieTitle().postValue(title.getText().toString());
             mViewModel.getMovieDescription().postValue(description.getText().toString());
 
-            mViewModel.save(title.getText().toString(),
-                    description.getText().toString());
+            mViewModel.save(title.getText().toString(), description.getText().toString());
             // save to repo
             ExecutorService executorService = Executors.newSingleThreadExecutor();
             Handler handler = new Handler(Looper.getMainLooper());
@@ -154,6 +155,22 @@ public class MovieDetailsFragment extends Fragment {
                 })
                 .setPositiveButton("OK", (dialog, which) -> {
                     mViewModel.getMediaType().postValue(selectedItem[0]);
+                }).setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    private void setShowFormat() {
+
+        String [] items = getResources().getStringArray(R.array.format_types);
+        final String[] selectedItem = new String[1];
+        int defaultItem = 0;
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Select Show Format")
+                .setSingleChoiceItems(items, defaultItem, (dialog, which) -> {
+                    selectedItem[0] =items[which];
+                })
+                .setPositiveButton("OK", (dialog, which) -> {
+                    mViewModel.getShowFormat().postValue(selectedItem[0]);
                 }).setNegativeButton("Cancel", null)
                 .show();
     }

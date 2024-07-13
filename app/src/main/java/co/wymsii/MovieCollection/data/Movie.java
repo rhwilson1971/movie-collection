@@ -3,7 +3,6 @@ package co.wymsii.MovieCollection.data;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import java.util.Date;
-import java.util.Objects;
 
 @Entity(tableName = "movies")
 public class Movie {
@@ -16,16 +15,18 @@ public class Movie {
     private String description;
     private String mediaType;
     private String imageURL;
+    private String showFormat;
 
-    public Movie(long id, String title, String description, Long premeireTimestamp, Long addedTimestamp, String genre, String mediaType, String imageURL){
+    public Movie(long id, String title, String description, Long premiereTimestamp, Long addedTimestamp, String genre, String mediaType, String imageURL, String showFormat){
         this.id= id;
         this.title=title;
         this.description = description;
-        this.premiered = new Date(premeireTimestamp);
+        this.premiered = new Date(premiereTimestamp);
         this.added = new Date(addedTimestamp);
         this.genre = genre;
         this.mediaType = mediaType;
         this.setImageURL(imageURL);
+        this.setShowFormat(showFormat);
     }
 
 
@@ -38,6 +39,7 @@ public class Movie {
         premiered = new Date();
         added = new Date();
         imageURL = "";
+        showFormat = "";
     }
 
     public String getTitle() {
@@ -104,4 +106,11 @@ public class Movie {
         this.imageURL = imageURL;
     }
 
+    public String getShowFormat() {
+        return showFormat;
+    }
+
+    public void setShowFormat(String showFormat) {
+        this.showFormat = showFormat;
+    }
 }

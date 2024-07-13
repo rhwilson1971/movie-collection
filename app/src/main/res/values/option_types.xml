@@ -24,8 +24,8 @@
         <item>War</item>
         <item>Western</item>
         <item>Anime</item>
+        <item>TV Series</item>
     </string-array>
-
     <string-array name="media_types">
         <item>DVD</item>
         <item>Blu-Ray</item>
@@ -41,5 +41,9 @@
         <item>Tubi</item>
         <item>Amazon Prime</item>
         <item>BET+</item>
+    </string-array>
+    <string-array name="format_types">
+        <item>Movie</item>
+        <item>TV Show</item>
     </string-array>
 </resources>
