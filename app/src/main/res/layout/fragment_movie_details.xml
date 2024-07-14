@@ -89,7 +89,7 @@
                 android:layout_height="80dp"
                 android:contentDescription="@string/format_type"
                 android:scaleType="fitCenter"
-                android:src="@drawable/creator_dvd_icon"
+                android:src="@drawable/dvd_icon_crayon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -126,6 +126,7 @@
                 android:id="@+id/buttonFormat"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:background="@drawable/tv_set_vector_icon"
                 android:contentDescription="@string/content_media"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -166,6 +167,7 @@
                 android:id="@+id/buttonGenre"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:background="@drawable/drama_vector_icon"
                 android:contentDescription="@string/content_genre"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
