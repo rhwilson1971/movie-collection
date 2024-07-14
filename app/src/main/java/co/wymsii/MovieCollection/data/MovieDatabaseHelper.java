@@ -117,7 +117,7 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
                 String genre = cursor.getString(6);
                 String imageURL = cursor.getString(7);
 
-                Movie movie = new Movie(id, title, desc, premiered, added, mediaType, genre, imageURL);
+                Movie movie = new Movie(id, title, desc, premiered, added, mediaType, genre, imageURL, "");
 
                 movieList.add(movie);
             } while (cursor.moveToNext());

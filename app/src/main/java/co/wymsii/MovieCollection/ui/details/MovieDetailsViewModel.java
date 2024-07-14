@@ -1,9 +1,14 @@
 package co.wymsii.MovieCollection.ui.details;
 
-import androidx.lifecycle.LiveData;
+
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
+
+import java.util.Date;
+
 
 import javax.inject.Inject;
 
@@ -16,26 +21,92 @@ public class MovieDetailsViewModel extends ViewModel {
 
     MutableLiveData<String> movieTitle = new MutableLiveData<>();
     MutableLiveData<String> movieDescription = new MutableLiveData<>();
+    MutableLiveData<Movie> movie = new MutableLiveData<>();
+    MutableLiveData<String> movieGenre = new MutableLiveData<>();
+    MutableLiveData<String> mediaType = new MutableLiveData<>();
+    MutableLiveData<String> showFormat = new MutableLiveData<>();
 
-    public MovieRepository moviesRepository;
-    public SavedStateHandle savedStateHandle;
+    public final MovieRepository moviesRepository;
+    public final SavedStateHandle savedStateHandle;
 
     @Inject
     MovieDetailsViewModel(
-            SavedStateHandle savedStateHandle,
-            MovieRepository moviesRepository) {
+            MovieRepository moviesRepository,
+            SavedStateHandle savedStateHandle
+            ) {
 
         this.moviesRepository = moviesRepository;
         this.savedStateHandle = savedStateHandle;
 
-        String movieId = savedStateHandle.get("movieId");
-        Long id = Long.parseLong(movieId);
-        LiveData<Movie> movie = moviesRepository.getMovie(id);
+        long movieId = savedStateHandle.get("movieId");
 
-        movie.observeForever(m -> {
-            movieTitle.setValue(m.getTitle());
-            movieDescription.setValue(m.getDescription());
-        });
+        if(movieId != 0L) {
+
+            moviesRepository.getMovie(movieId).observeForever(m -> {
+                        if(m != null){
+
+                            movie.postValue(m);
+                        }
+                    });
+
+
+            movie.observeForever(m -> {
+
+                if(m != null)
+                    movieTitle.setValue(m.getTitle());
+                    movieDescription.setValue(m.getDescription());
+                    movieGenre.setValue(m.getGenre());
+                    mediaType.setValue(m.getMediaType());
+                    showFormat.setValue(m.getShowFormat());
+                    Log.d("TAG", "update: " + m.getTitle());
+                }
+            );
+//            movie.observeForever(m -> {
+//                movieTitle.setValue(m.getTitle());
+//                movieDescription.setValue(m.getDescription());
+//                movieGenre.setValue(m.getGenre());
+//                mediaType.setValue(m.getMediaType());
+//                showFormat.setValue(m.getShowFormat());
+//            });
+        }
+        else {
+            movieTitle.setValue("");
+            movieDescription.setValue("");
+            movieGenre.setValue("");
+            mediaType.setValue("");
+            showFormat.setValue("");
+        }
+    }
+
+    public void save() {
+        if (movie.getValue() == null) {
+            movie.setValue(new Movie());
+        }
+        movie.getValue().setTitle(movieTitle.getValue());
+        movie.getValue().setDescription(movieDescription.getValue());
+        movie.getValue().setGenre(movieGenre.getValue());
+        movie.getValue().setMediaType(mediaType.getValue());
+        movie.getValue().setAdded(new Date());
+    }
+
+    public void save(String title, String description) {
+        if (movie.getValue() == null) {
+            movie.setValue(new Movie());
+        }
+        movie.getValue().setTitle(title);
+        movie.getValue().setDescription(description);
+        movie.getValue().setGenre(movieGenre.getValue());
+        movie.getValue().setMediaType(mediaType.getValue());
+        movie.getValue().setShowFormat(showFormat.getValue());
+        if(movie.getValue().getId() == 0)
+            movie.getValue().setAdded(new Date());
+    }
+
+    public void updateRepo(){
+        if(movie.getValue().getId() == 0)
+            moviesRepository.save(movie.getValue());
+        else
+            moviesRepository.update(movie.getValue());
     }
 
     public MutableLiveData<String> getMovieTitle() {
@@ -43,5 +114,14 @@ public class MovieDetailsViewModel extends ViewModel {
     }
     public MutableLiveData<String> getMovieDescription() {
         return movieDescription;
+    }
+    public MutableLiveData<String> getMovieGenre() {
+        return movieGenre;
+    }
+    public MutableLiveData<String> getMediaType() {
+        return mediaType;
+    }
+    public MutableLiveData<String> getShowFormat() {
+        return showFormat;
     }
 }

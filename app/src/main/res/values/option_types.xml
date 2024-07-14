@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="movie_genres">
+        <item>Action</item>
+        <item>Adventure</item>
+        <item>Animation</item>
+        <item>Biography</item>
+        <item>Comedy</item>
+        <item>Crime</item>
+        <item>Documentary</item>
+        <item>Drama</item>
+        <item>Family</item>
+        <item>Fantasy</item>
+        <item>Film-Noir</item>
+        <item>Game-Show</item>
+        <item>History</item>
+        <item>Horror</item>
+        <item>Music</item>
+        <item>Musical</item>
+        <item>Mystery</item>
+        <item>Sci-Fi</item>
+        <item>Sport</item>
+        <item>Thriller</item>
+        <item>War</item>
+        <item>Western</item>
+        <item>Anime</item>
+        <item>TV Series</item>
+    </string-array>
+    <string-array name="media_types">
+        <item>DVD</item>
+        <item>Blu-Ray</item>
+        <item>Vudu</item>
+        <item>VHS</item>
+        <item>Disney+</item>
+        <item>Netflix</item>
+        <item>MAX</item>
+        <item>Paramount+</item>
+        <item>Apple TV+</item>
+        <item>Hulu</item>
+        <item>Peacock</item>
+        <item>Tubi</item>
+        <item>Amazon Prime</item>
+        <item>BET+</item>
+    </string-array>
+    <string-array name="format_types">
+        <item>Movie</item>
+        <item>TV Show</item>
+    </string-array>
+</resources>

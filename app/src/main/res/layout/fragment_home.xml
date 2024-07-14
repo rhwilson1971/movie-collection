@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="409dp"
-        android:layout_height="75dp"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -18,26 +18,29 @@
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/editTextText"
-                android:layout_width="304dp"
+
+                android:id="@+id/editSearchTerm"
+                android:layout_width="303dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
+                android:autofillHints=""
                 android:ems="10"
+                android:hint="@string/enter_search_term"
                 android:inputType="text"
-                android:text="Name"
+                android:text=""
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/buttonFindMovies"
                 android:layout_width="68dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:text="Button"
+                android:hint="@string/find_a_movie_text"
                 app:icon="@android:drawable/ic_search_category_default"
-                app:layout_constraintStart_toEndOf="@+id/editTextText"
+                app:layout_constraintStart_toEndOf="@+id/editSearchTerm"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -48,7 +51,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
@@ -56,41 +59,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ToggleButton
-                android:id="@+id/toggleButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:text="ToggleButton"
-                app:layout_constraintStart_toEndOf="@+id/toggleButton3"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ToggleButton
-                android:id="@+id/toggleButton3"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="56dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/filter_all"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayoutCategories"
+                android:layout_width="388dp"
+                android:layout_height="61dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0">
 
-            <ToggleButton
-                android:id="@+id/toggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="ToggleButton"
-                app:layout_constraintStart_toEndOf="@+id/toggleButton2"
-                app:layout_constraintTop_toTopOf="parent" />
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:text="@string/content_genre" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:text="@string/content_media" />
+
+
+            </com.google.android.material.tabs.TabLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/movieListView"
@@ -98,5 +92,19 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="76dp"
+        android:contentDescription="@string/add_movie_item_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.82"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_add" />
 </androidx.constraintlayout.widget.ConstraintLayout>

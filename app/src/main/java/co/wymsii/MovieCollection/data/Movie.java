@@ -9,34 +9,37 @@ public class Movie {
     private String title;
     private Date premiered;
     private Date added;
-    @PrimaryKey
-    private Long id;
+    @PrimaryKey(autoGenerate = true)
+    private long id;
     private String genre;
     private String description;
     private String mediaType;
     private String imageURL;
+    private String showFormat;
 
-    public Movie(Long id, String title, String description, Long premeireTimestamp, Long addedTimestamp, String genre, String mediaType, String imageURL){
+    public Movie(long id, String title, String description, Long premiereTimestamp, Long addedTimestamp, String genre, String mediaType, String imageURL, String showFormat){
         this.id= id;
         this.title=title;
         this.description = description;
-        this.premiered = new Date(premeireTimestamp);
+        this.premiered = new Date(premiereTimestamp);
         this.added = new Date(addedTimestamp);
         this.genre = genre;
         this.mediaType = mediaType;
         this.setImageURL(imageURL);
+        this.setShowFormat(showFormat);
     }
 
 
     public Movie(){
         title = "";
-        id = 0L;
+        //id = 0L;
         genre = "None";
         description = "";
         mediaType = "None";
         premiered = new Date();
         added = new Date();
         imageURL = "";
+        showFormat = "";
     }
 
     public String getTitle() {
@@ -63,11 +66,11 @@ public class Movie {
         this.added = added;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -101,5 +104,13 @@ public class Movie {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public String getShowFormat() {
+        return showFormat;
+    }
+
+    public void setShowFormat(String showFormat) {
+        this.showFormat = showFormat;
     }
 }
